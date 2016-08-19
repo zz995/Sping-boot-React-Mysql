@@ -1,0 +1,23 @@
+
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.wrapper > * {
+    padding: 10px;
+    flex: 1 100%;
+}
+
+@media all and (min-width: 600px) {
+    .aside, .aside2 { flex: 1 auto; }
+}
+
+@media all and (min-width: 800px) {
+    .main    { flex: 3 0px; }
+    .aside { order: 1; max-width: 250px;}
+    .aside2 { order: 3; max-width: 250px;}
+    .main    { order: 2; }
+}
+
+

@@ -1,0 +1,18 @@
+Category
+
+api/category - Создание категории
+    BODY
+        parentId
+        name
+    METHODE post
+
+api/category/{id} - Изменение категории
+    BODY
+        name
+    METHODE put
+
+api/category/{id} - Удаление категории
+    METHODE delete
+
+api/category - Получить список категорий
+    METHODE get
