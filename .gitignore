@@ -2,3 +2,4 @@ node_modules
 .mvn
 .idea
 .\src\main\resources\static\dist\bundle.js
+.\target
