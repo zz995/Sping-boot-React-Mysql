@@ -1,32 +1,75 @@
 'use strict';
 
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
+
+const DEBUG = !process.argv.includes('--release');
 
 const BUILD_DIR = path.resolve(__dirname, './src/main/resources/static/dist');
 const APP_DIR = path.resolve(__dirname, './frontend/src');
 
-const config = {
-    debug: true,
-    devtool: 'inline-source-map',
-    entry: APP_DIR + '/app.jsx',
+module.exports = {
+    cache: DEBUG,
+    debug: DEBUG,
+    devtool: DEBUG ? 'inline-source-map' : false,
+    stats: {
+        colors: true,
+        progress: true
+    },
+    entry: [
+        'babel-polyfill',
+        path.join(APP_DIR, 'app.jsx')
+    ],
     output: {
         path: BUILD_DIR,
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/dist/'
     },
-    module : {
-        loaders : [
+    plugins: [
+        new webpack.optimize.OccurenceOrderPlugin(),
+        ...(!DEBUG ? [
+            new webpack.optimize.DedupePlugin(),
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    screw_ie8: true,
+                    warnings: false
+                }
+            })
+        ] : [
+            new webpack.HotModuleReplacementPlugin()
+        ]),
+        new webpack.NoErrorsPlugin()
+    ],
+    module: {
+        loaders: [
             {
-                test : /\.jsx?/,
-                include : APP_DIR,
-                loader : 'babel'
-            },
-            {
+                exclude: /node_modules/,
+                test: /\.jsx?$/,
+                include: [
+                    path.resolve(__dirname, "frontend")
+                ],
+                loader: 'babel',
+                plugins: ['transform-runtime']
+            }, {
                 test: /\.scss$/,
                 loader: 'style!css!postcss-loader!sass'
+            }, {
+                test: /\.json$/,
+                loader: 'json'
+            }, {
+                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+                loader: 'url?limit=10000'
             }
         ]
+    },
+    devServer: {
+        host: 'localhost',
+        port: 3000,
+        contentBase: path.join(BUILD_DIR, '..'),
+        hot: true,
+        inline: true,
+        proxy: {
+            '*' : 'http://localhost:8080'
+        }
     }
 };
-
-module.exports = config;

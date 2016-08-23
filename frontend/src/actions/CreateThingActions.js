@@ -13,17 +13,12 @@ export default {
         })
     },
 
-    changeCategory(data) {
+    changeCategory(index) {
         AppDispatcher.dispatch({
             actionType: AppConstants.CREATE_THING_CHANGE_CATEGORY,
-            data
-        })
-    },
-
-    addCategory(data) {
-        AppDispatcher.dispatch({
-            actionType: AppConstants.CREATE_THING_ADD_CATEGORY,
-            data
+            data: {
+                index
+            }
         })
     },
 
@@ -44,13 +39,6 @@ export default {
     deleteFeature(data) {
         AppDispatcher.dispatch({
             actionType: AppConstants.CREATE_THING_DELETE_FEATURE,
-            data
-        })
-    },
-
-    deleteCategory(data) {
-        AppDispatcher.dispatch({
-            actionType: AppConstants.CREATE_THING_DELETE_CATEGORY,
             data
         })
     },

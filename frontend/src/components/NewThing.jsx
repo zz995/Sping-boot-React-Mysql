@@ -3,12 +3,14 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import ThingStore from '../store/CreateThingStore';
+import CategoryStore from '../store/CategoryStore';
 import CreateThingActions from '../actions/CreateThingActions';
 import '../style/newThing.scss';
 
 const getAppState = () => {
     return {
-        thing: ThingStore.getThing()
+        thing: ThingStore.getThing(),
+        categories: CategoryStore.getCategories()
     }
 };
 
@@ -26,16 +28,18 @@ export default class Category extends Component {
 
     componentDidMount() {
         ThingStore.addChangeListener(this._onChange);
+        CategoryStore.addChangeListener(this._onChange);
     }
 
     componentWillUnmount() {
         ThingStore.removeChangeListener(this._onChange);
+        CategoryStore.removeChangeListener(this._onChange);
     }
 
     render() {
 
-        const thing = this.state.thing;
-        const {categories = [], features = []} = thing;
+        const {thing, categories, selectCategories} = this.state;
+        const {features = []} = thing;
 
         return (
             <div className="new-thing">
@@ -46,23 +50,19 @@ export default class Category extends Component {
                     <input name='name' value={thing.name} onChange={this.changeName}/>
                 </div>
                 <div className="categories">
-                    <button onClick={CreateThingActions.addCategory}>Додати категорію</button>
-
-                    {categories.length ? <label htmlFor="categories" className="title-create">Категорії: </label> : ''}
-                    {categories.map((category, i) => {
-                        const changeCategory = this.changeCategory.bind(this, i);
-                        const deleteCategory = CreateThingActions.deleteCategory.bind(this, {index: i});
-                        return (
-                            <div className="category">
-                                <input name={`categories[]`} value={category} onChange={changeCategory} placeholder="Id категорії"/>
-                                <button className="delete" onClick={deleteCategory}>Видалити категорію</button>
-                            </div>
-                        );
-                    })}
+                    <label htmlFor="categories" className="title-create">Категорії: </label>
+                    <select multiple onChange={::this.changeCategory} value={thing.categories} size="10" className="select">
+                        {categories.slice(1).filter(item => !item.input).map(category =>
+                            <option key={category.id} value={category.id}>
+                                {'—'.repeat(category.level).concat(category.name)}
+                            </option>
+                        )}
+                    </select>
                 </div>
                 <div>
                     <button onClick={CreateThingActions.addFeature}>Додати характеристику</button>
-                    {features.length ? <label htmlFor="categories" className="title-create">Характеристики: </label> : ''}
+                    {features.length ?
+                        <label htmlFor="categories" className="title-create">Характеристики: </label> : ''}
                     {features.map((feature, i) => {
                         const changeFeatureName = this.changeFeature.bind(this, i, "name");
                         const changeFeatureValue = this.changeFeature.bind(this, i, "value");
@@ -74,11 +74,14 @@ export default class Category extends Component {
                         return (
                             <div className="feature">
                                 <label htmlFor="features">Ім'я: </label>
-                                <input name={`features[][name]`} className="space" value={feature.name} onChange={changeFeatureName}/>
+                                <input name={`features[][name]`} className="space" value={feature.name}
+                                       onChange={changeFeatureName}/>
                                 <label htmlFor="features">Значення: </label>
-                                <input name={`features[][value]`} className="space" value={feature.value} onChange={changeFeatureValue}/>
+                                <input name={`features[][value]`} className="space" value={feature.value}
+                                       onChange={changeFeatureValue}/>
                                 <label htmlFor="category">Включити до категорій </label>
-                                <input type="checkbox" name="category" className="space" value={feature.category} checked={feature.category} onChange={changeFeatureCategory}/>
+                                <input type="checkbox" name="category" className="space" value={feature.category}
+                                       checked={feature.category} onChange={changeFeatureCategory}/>
                                 <button className="delete" onClick={deleteFeature}>Видалити характеристику</button>
                             </div>
                         );
@@ -93,16 +96,14 @@ export default class Category extends Component {
         CreateThingActions.changeName({name: e.target.value});
     }
 
-    changeCategory(index, e) {
-        CreateThingActions.changeCategory({index, value: e.target.value});
+    changeCategory({target: {options}}) {
+        CreateThingActions.changeCategory(options[options.selectedIndex].value);
     }
 
     changeFeature(index, type, e) {
         CreateThingActions.changeFeature({index, type, value: e.target.value})
     }
 }
-
-
 
 
 //створення нової речі
