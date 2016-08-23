@@ -48,7 +48,7 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "frontend")
                 ],
-                loader: 'babel',
+                loader:  'react-hot!babel-loader',
                 plugins: ['transform-runtime']
             }, {
                 test: /\.scss$/,
