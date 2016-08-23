@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "dev": "wwebpack-dev-server",
-    "build": "webpack --release",
+    "dev": "webpack-dev-server",
+    "build": "webpack --release --progress",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "mvnw spring-boot:run"
   },
