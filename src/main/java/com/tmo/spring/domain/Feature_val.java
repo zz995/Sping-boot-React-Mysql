@@ -1,7 +1,6 @@
 package com.tmo.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -63,7 +62,6 @@ public class Feature_val {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "feature_title_id")
-
 
     public Feature_title getFeature_title() {
         return feature_title;

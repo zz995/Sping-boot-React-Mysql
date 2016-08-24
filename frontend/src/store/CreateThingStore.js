@@ -9,12 +9,6 @@ const CHANGE_EVENT = 'change';
 let _thing = {categories: []};
 let _edit = {};
 
-/*const loadThingsData = data => {
-    _things = data.map (item => {
-        return item;
-    });
-};*/
-
 class CreateThingStoreClass extends EventEmitter {
 
     emitChange() {
@@ -38,8 +32,6 @@ const CreateThingStore = new CreateThingStoreClass();
 
 CreateThingStore.dispatcherApp = AppDispatcher.register((payload) => {
     const {data, actionType} = payload;
-
-    console.log(data);
 
     switch (actionType) {
 

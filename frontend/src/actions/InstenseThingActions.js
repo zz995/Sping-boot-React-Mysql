@@ -2,7 +2,6 @@
 
 import AppDispatcher from '../dispatcher/AppDispatcher.js';
 import AppConstants from '../constants/AppConstants.js';
-import ThingApi from '../utils/ThingApi';
 
 export default {
 

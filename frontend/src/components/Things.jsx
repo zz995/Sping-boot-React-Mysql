@@ -3,8 +3,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import ThingStore from '../store/ThingsStore';
-import ThingAction from '../actions/ThingActions';
-import AppConstants from '../constants/AppConstants';
 import '../style/things.scss';
 
 const getAppState = () => {

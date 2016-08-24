@@ -16,9 +16,6 @@ const checkProp = data => {
     let {name, value, check} = data;
 
     _selected[name][value] = check;
-
-/*    _selected.name = data.name;
-    _selected.value = data.value;*/
 };
 
 const loadFeatureData = data => {

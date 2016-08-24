@@ -28,8 +28,6 @@ export default class Category extends Component {
 
     componentDidMount() {
         CategoryStore.addChangeListener(this._onChange);
-        console.log('lfjglakdfjglkadjfglkajdflgkjadflgjdlf');
-        //React.findDOMNode(this.refs.categoryInput).focus();
     }
 
     componentWillUnmount() {

@@ -9,10 +9,6 @@ const CHANGE_EVENT = 'change';
 let _thing = {};
 
 const loadThingData = data => {
-
-    console.log('getByCategory');
-    console.log(data);
-
     _thing = data;
 };
 

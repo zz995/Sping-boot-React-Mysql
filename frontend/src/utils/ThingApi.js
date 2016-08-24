@@ -20,8 +20,6 @@ export default {
         fetch(`/api/thing/category/${id}`)
             .then(res => res.json())
             .then(data => {
-                console.log('getByCategory');
-                console.log(data);
                 ThingAction.receiveThings(data);
             });
     },
@@ -30,15 +28,11 @@ export default {
         fetch(`/api/thing/${id}`)
             .then(res => res.json())
             .then(data => {
-                console.log('api');
-                console.log(data);
                 InstenseThingActions.receiveThing(data);
             });
     },
 
     addThing(data) {
-        console.log(data);
-
         fetch('/api/thing', {
             method: 'post',
             headers: {
@@ -116,15 +110,9 @@ export default {
             query += queryValue + queryName;
         }
 
-        console.log('URL');
-        console.log(query);
-
         fetch(query)
             .then(res => res.json())
             .then(res => {
-                console.log('api');
-                console.log(res);
-
                 ThingAction.receiveThings(res);
                 CategoryActions.checkProp(data);
             });

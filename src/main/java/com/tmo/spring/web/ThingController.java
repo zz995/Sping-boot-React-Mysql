@@ -77,18 +77,8 @@ public class ThingController {
             @RequestParam(value="category") int categoryId
     ) {
 
-        /*out.println("_________________________________________");
-        out.println(java.net.URLDecoder.decode(categoryId));
-        out.println("_________________________________________");*/
-
         Category category = categoryRepo.findById(categoryId);
-
-        out.println("_________________________________________");
-        out.println(nameFeature.length);
-        out.println("_________________________________________");
-
         Set<Thing> thing;
-
 
         thing = thingRepo.findCatFeature(
                 category.getRightNode(),
@@ -111,7 +101,6 @@ public class ThingController {
     public ResponseEntity<?> getByCategory(@PathVariable int categoryId) {
 
         Category category = categoryRepo.findById(categoryId);
-
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json");
@@ -240,33 +229,6 @@ public class ThingController {
 
         Map<String, Feature_title> feature_titleMap = new HashMap<>();
 
-        /*if (data.subThings != null) {
-            Set<Count> counts = new HashSet<Count>();
-
-           for (SubThing subThing : data.subThings) {
-                Set<Feature_val> feature_vals = new HashSet<Feature_val>();
-                Count count = new Count();
-                 for (Feature feature : subThing.features) {
-                     Feature_title feature_title = feature_titleMap.get(feature.name);
-                     if (feature_title == null) {
-                         feature_title = featureRepo.findByName(feature.name);
-                         if (feature_title == null) {
-                             feature_title = new Feature_title(feature.name);
-                             feature_titleMap.put(feature.name, feature_title);
-                         }
-                     }
-                    feature_vals.add(new Feature_val(feature.value, feature_title, count));
-                }
-                count.setFeature_vals(feature_vals);
-                count.setNumber(subThing.count);
-                count.setThing(thing);
-                counts.add(count);
-            }
-
-            thing.setCounts(counts);
-        }*/
-
-
         Feature[] features = data.getFeatures();
 
         if (features != null) {
@@ -319,13 +281,6 @@ public class ThingController {
 
         thingRepo.deleteById(thingId);
 
-/*        int[] test = featureRepo.getIds();
-        out.println("_________________________________________");
-        for (int i = 0; i < test.length; i++) {
-            out.println(test[i]);
-        }
-        out.println("_________________________________________");*/
-
         int[] idsFeatureActive = featureRepo.getIds();
 
         if (idsFeatureActive.length == 0) {
@@ -340,12 +295,4 @@ public class ThingController {
         return new ResponseEntity<>("{\"id\": " + thingId + "}", responseHeaders, HttpStatus.OK
         );
     }
-
-/*    @RequestMapping(value = "*//*", method = RequestMethod.GET)
-    public String redirect() {
-        out.println("_________________________________________");
-        out.println("_________________________________________");
-
-        return "redirect:/";
-    }*/
 }

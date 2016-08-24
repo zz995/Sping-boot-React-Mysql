@@ -101,21 +101,8 @@ export default class Category extends Component {
         this.setState(getAppState());
     }
 
-    /*routerWillLeave() {
-        console.log('searchByCategory');
-        /!*if (this.props.searchByCategory) {
-            CategoryAction.searchByCategory();
-        } else {
-            CategoryAction.searchAll();
-        }*!/
-    }*/
-
     componentDidMount() {
         CategoryStore.addChangeListener(this._onChange);
-        //this.context.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
-
-
-        //React.findDOMNode(this.refs.categoryInput).focus();
     }
 
     componentWillUnmount() {
@@ -135,16 +122,6 @@ export default class Category extends Component {
 
         const categories = this.state.categories;
         const isAdmin = this.state.isAdmin;
-
-    /*    const idCategory = this.props.categoryId;
-        console.log(idCategory);
-        if (idCategory) {
-            //ThingAction.findByCategory(idCategory);
-            CategoryAction.searchByCategory();
-        } else {
-            //ThingAction.getThings();
-            //ThingAction.searchAll();
-        }*/
 
         return (
             <div onClick={this.handelClick} className="category">
@@ -170,7 +147,3 @@ export default class Category extends Component {
         )
     }
 }
-
-/*Category.contextTypes = {
-    router: PropTypes.object.isRequired
-};*/

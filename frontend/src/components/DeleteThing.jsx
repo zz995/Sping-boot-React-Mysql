@@ -66,8 +66,3 @@ export default class DeleteThing extends Component {
         )
     }
 }
-
-
-
-
-//створення нової речі

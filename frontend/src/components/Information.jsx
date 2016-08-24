@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import Category from './Category.jsx';
 import Thing from './Thing.jsx';
-import InstenseThingAction from '../actions/InstenseThingActions';
 import ThingApi from '../utils/ThingApi'
 
 export default class Information extends Component {

@@ -12,7 +12,6 @@ export default class App extends Component {
                     <li><Link onlyActiveOnIndex={true} activeClassName='active' to='/'>Головна</Link></li>
                     <li><Link to='/admin' activeClassName='active'>Адміністративна панель</Link></li>
                     <li><Link to='/about' activeClassName='active'>Про сайт</Link></li>
-                    {/*<li className="search"><input/></li>*/}
                 </ul>
                 {this.props.children}
             </div>

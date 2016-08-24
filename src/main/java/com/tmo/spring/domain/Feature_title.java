@@ -14,10 +14,6 @@ public class Feature_title {
 
     private String name;
 
-
-
-    //private Category category;
-
     private Set<Category> categories;
 
     public Feature_title() { }
@@ -44,8 +40,6 @@ public class Feature_title {
         this.name = name;
     }
 
-
-
     private Set<Feature_val> feature_vals;
 
     @JsonBackReference
@@ -59,8 +53,6 @@ public class Feature_title {
         this.feature_vals = feature_vals;
     }
 
-
-
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "feature_titles", cascade = CascadeType.ALL)
     public Set<Category> getCategories() {
@@ -70,17 +62,4 @@ public class Feature_title {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
-
-
-/*
-    @JsonBackReference*//*("category-feature")*/
-/*    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }*/
 }

@@ -104,6 +104,3 @@ export default class Category extends Component {
         CreateThingActions.changeFeature({index, type, value: e.target.value})
     }
 }
-
-
-//створення нової речі

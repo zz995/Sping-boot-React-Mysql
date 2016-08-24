@@ -48,15 +48,4 @@ public class User {
         this.things = things;
     }
 
-
-/*    @JsonManagedReference*//*("category-feature")*/
-/*    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    public Set<Feature_title> getFeature_titles() {
-        return feature_titles;
-    }
-
-    public void setFeature_titles(Set<Feature_title> feature_titles) {
-        this.feature_titles = feature_titles;
-    }*/
-
 }

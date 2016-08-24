@@ -54,10 +54,6 @@ public class CategoryController {
     @RequestMapping(value = "/api/category", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody CategoryData data) {
 
-        out.println("_________________________________________");
-        out.println(data.getName());
-        out.println("_________________________________________");
-
         int right = (int)categoryRepo.count() * 2;
         if (right > 0) {
             right--;
@@ -80,9 +76,6 @@ public class CategoryController {
 
                 right = cat.getRightNode();
                 level = cat.getLevel();
-/*                out.println("_________________________________________");
-                out.println(right);
-                out.println("_________________________________________");*/
             }
         }
         categoryRepo.updateKey(right);
@@ -128,7 +121,7 @@ public class CategoryController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json");
         return new ResponseEntity<>(
-                new JsonSerializer().exclude("leftNode", "rightNode").serialize(categ), responseHeaders, HttpStatus.OK
+            new JsonSerializer().exclude("leftNode", "rightNode").serialize(categ), responseHeaders, HttpStatus.OK
         );
     }
 

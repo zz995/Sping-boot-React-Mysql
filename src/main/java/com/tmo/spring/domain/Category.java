@@ -1,10 +1,6 @@
 package com.tmo.spring.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.text.ParseException;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -39,11 +35,6 @@ public class Category {
         this.leftNode = leftNode;
         this.rightNode = rightNode;
     }
-
-/*    public Category(String name, Set<Thing> things) {
-        this.name = name;
-        this.things = things;
-    }*/
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -111,16 +102,5 @@ public class Category {
     public void setFeature_titles(Set<Feature_title> feature_titles) {
         this.feature_titles = feature_titles;
     }
-
-
-/*    @JsonManagedReference*//*("category-feature")*/
-/*    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    public Set<Feature_title> getFeature_titles() {
-        return feature_titles;
-    }
-
-    public void setFeature_titles(Set<Feature_title> feature_titles) {
-        this.feature_titles = feature_titles;
-    }*/
 
 }
