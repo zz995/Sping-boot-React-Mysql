@@ -40,6 +40,9 @@ CreateThingStore.dispatcherApp = AppDispatcher.register((payload) => {
             break;
 
         case AppConstants.CREATE_THING_CHANGE_CATEGORY:
+            if (!_thing.categories) {
+                _thing.categories = [];
+            }
             if(_thing.categories.includes(data.index)) {
                 _thing.categories = _thing.categories.filter(item => item != data.index)
             } else {

@@ -15,7 +15,8 @@ const getAppState = () => {
 };
 
 const create = (e) => {
-    const parentId = e.target.getAttribute('data-categoryId');
+    let parentId = e.target.getAttribute('data-categoryId');
+    parentId = parentId === undefined ? 0 : parentId;
     const name = e.target.value.trim();
     if(e.keyCode == 13 && name) {
         CategoryAction.create({parentId, name});
@@ -27,6 +28,8 @@ const buildTree = (props) => {
     let {categories, isAdmin} = props;
 
     if (!categories.length) return null;
+
+    console.log(categories);
 
     const node = [];
     const {level} = categories[props.id];
