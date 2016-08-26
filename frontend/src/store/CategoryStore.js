@@ -40,6 +40,17 @@ const loadCategoryData = data => {
         isLeaf: !(array[i + 1] && array[i + 1].level > item.level),
         isClose: true
     }));
+
+    if (!_categories.length) {
+        _categories.push({
+            visible: false,
+            isLeaf: false,
+            isClose: true,
+            id: 0,
+            name: null,
+            level: 0
+        })
+    }
 };
 
 const toggleVisible = (id, turn)  => {
@@ -81,6 +92,10 @@ const needAddCategory = id => {
 };
 
 const inputDelete = () => {
+
+    console.log('_posInput');
+    console.log(_posInput);
+
     _categories.splice(_posInput, 1);
 };
 
