@@ -38,38 +38,42 @@ module.exports = {
         ] : [
             new webpack.HotModuleReplacementPlugin()
         ]),
-        new webpack.NoErrorsPlugin()
-    ],
-    module: {
-        loaders: [
-            {
-                exclude: /node_modules/,
-                test: /\.jsx?$/,
-                include: [
-                    path.resolve(__dirname, "frontend")
-                ],
-                loader:  'react-hot!babel-loader',
-                plugins: ['transform-runtime']
-            }, {
-                test: /\.scss$/,
-                loader: 'style!css!postcss-loader!sass'
-            }, {
-                test: /\.json$/,
-                loader: 'json'
-            }, {
-                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-                loader: 'url?limit=10000'
-            }
-        ]
-    },
-    devServer: {
-        host: 'localhost',
+    new webpack.NoErrorsPlugin()
+],
+module: {
+    loaders: [
+        {
+            exclude: /node_modules/,
+            test: /\.jsx?$/,
+            include: [
+                path.resolve(__dirname, "frontend")
+            ],
+            loader:  'react-hot!babel-loader',
+            plugins: ['transform-runtime']
+        }, {
+            test: /\.scss$/,
+            loader: 'style!css!postcss-loader!sass'
+        }, {
+            test: /\.json$/,
+            loader: 'json'
+        }, {
+            test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+            loader: 'url?limit=10000'
+        }
+    ]
+},
+devServer: {
+    host: 'localhost',
         port: 3000,
         contentBase: path.join(BUILD_DIR, '..'),
         hot: true,
         inline: true,
         proxy: {
-            '*' : 'http://127.0.0.1:8090'
+        '/api': {
+            target: 'http://localhost:8090',
+                secure: false,
+                prependPath: false
         }
     }
+}
 };
