@@ -52,7 +52,7 @@ export default class Category extends Component {
                 <div className="categories">
                     <label htmlFor="categories" className="title-create">Категорії: </label>
                     <select multiple onChange={::this.changeCategory} value={thing.categories} size="10" className="select">
-                        {categories.slice(1).filter(item => !item.input).map(category =>
+                        {categories && categories.slice(1).filter(item => !item.input).map(category =>
                             <option key={category.id} value={category.id}>
                                 {'—'.repeat(category.level).concat(category.name)}
                             </option>

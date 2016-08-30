@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="feature_val")
 public class Feature_val {
-    private int id;
+    private Integer id;
     private String value;
     private Thing thing;
     private Count count;
@@ -33,11 +33,11 @@ public class Feature_val {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

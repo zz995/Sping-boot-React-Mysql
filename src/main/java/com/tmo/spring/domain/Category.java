@@ -8,10 +8,10 @@ import java.util.Set;
 @Table(name="category")
 public class Category {
 
-    private int id;
-    private int level;
-    private int leftNode;
-    private int rightNode;
+    private Integer id;
+    private Integer level;
+    private Integer leftNode;
+    private Integer rightNode;
     private String name;
 
    private Set<Feature_title> feature_titles;
@@ -38,11 +38,11 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -54,27 +54,27 @@ public class Category {
         this.name = name;
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
-    public int getLeftNode() {
+    public Integer getLeftNode() {
         return leftNode;
     }
 
-    public void setLeftNode(int leftNode) {
+    public void setLeftNode(Integer leftNode) {
         this.leftNode = leftNode;
     }
 
-    public int getRightNode() {
+    public Integer getRightNode() {
         return rightNode;
     }
 
-    public void setRightNode(int rightNode) {
+    public void setRightNode(Integer rightNode) {
         this.rightNode = rightNode;
     }
 

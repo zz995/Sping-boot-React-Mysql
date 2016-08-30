@@ -11,32 +11,32 @@ import java.util.Set;
 @Table(name="count")
 public class Count {
 
-    private int id;
-    private int number;
+    private Integer id;
+    private Integer number;
     private Thing thing;
     private Set<Feature_val> feature_vals;
 
     public Count() { }
 
-    public Count(int number) {
+    public Count(Integer number) {
         this.number = number;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

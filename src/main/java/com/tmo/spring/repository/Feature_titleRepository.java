@@ -13,10 +13,10 @@ public interface Feature_titleRepository extends JpaRepository<Feature_title, Lo
     Feature_title findByName(String name);
 
     @Query("select ft.id from Feature_title ft join ft.feature_vals fv")
-    int[] getIds();
+    Integer[] getIds();
 
     @Modifying
     @Transactional
     @Query("delete from Feature_title ft where ft.id not in ?1")
-    void deleteFeatureByIds(int[] ids);
+    void deleteFeatureByIds(Integer[] ids);
 }

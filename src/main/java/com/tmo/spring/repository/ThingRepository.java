@@ -11,15 +11,17 @@ import java.util.Set;
 @Repository
 @Transactional
 public interface ThingRepository extends JpaRepository<Thing, Long> {
-    Thing findById(int id);
+    Thing findById(Integer id);
 
-    Long deleteById(int id);
+    Long deleteById(Integer id);
+
+    //Set<Thing> findByRightNodeLessThanEqualAndLeftNodeGreaterThanEqual(Integer right, Integer left);
 
     @Query("select t from Thing t join t.categories c  where c.leftNode >= ?2 AND c.rightNode <= ?1")
-    Set<Thing> thingsByCategory(int right, int left);
+    Set<Thing> thingsByCategory(Integer right, Integer left);
 
     @Query("select t from Thing t join t.categories c join t.feature_vals fv join fv.feature_title ft where c.leftNode >= ?2 AND c.rightNode <= ?1 AND fv.value in ?4 AND ft.name in ?3 group by t.id having count(t)=?5")
-    Set<Thing> findCatFeature(int right, int left, String[] name, String[] value, long count);
+    Set<Thing> findCatFeature(Integer right, Integer left, String[] name, String[] value, long count);
 
 }
 

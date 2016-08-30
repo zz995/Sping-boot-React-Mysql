@@ -16,14 +16,8 @@ import jodd.json.JsonSerializer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.stereotype.Controller;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -37,7 +31,8 @@ import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletResponse;
 
-@Controller
+@RestController
+@CrossOrigin
 public class ThingController {
     @Autowired
     ThingRepository thingRepo;
@@ -49,38 +44,31 @@ public class ThingController {
     CategoryRepository categoryRepo;
 
     @RequestMapping(value = "/api/thing", method = RequestMethod.GET)
-    public ResponseEntity<?> get() {
+    public List<Thing> get() {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json");
 
-        return new ResponseEntity<>(
-                thingRepo.findAll(),
-                responseHeaders,
-                HttpStatus.OK
-        );
+        return thingRepo.findAll();
     }
 
     @RequestMapping(value = "/api/thing/{thingId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getById(@PathVariable int thingId) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Type", "application/json");
-        return new ResponseEntity<>(thingRepo.findById(thingId), responseHeaders, HttpStatus.OK
-        );
+    public Thing getById(@PathVariable Integer thingId) {
+        return thingRepo.findById(thingId);
     }
 
 
     @RequestMapping(value = "/api/thing/feature", method = RequestMethod.GET)
-    public ResponseEntity<?> getByFeature(
+    public Set<Thing> getByFeature(
             @RequestParam(value="name") String[] nameFeature,
             @RequestParam(value="value") String[] valueFeature,
-            @RequestParam(value="category") int categoryId
+            @RequestParam(value="category") Integer categoryId
     ) {
 
         Category category = categoryRepo.findById(categoryId);
-        Set<Thing> thing;
+        Set<Thing> things;
 
-        thing = thingRepo.findCatFeature(
+        things = thingRepo.findCatFeature(
                 category.getRightNode(),
                 category.getLeftNode(),
                 nameFeature,
@@ -88,27 +76,13 @@ public class ThingController {
                 valueFeature.length
         );
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Type", "application/json");
-        return new ResponseEntity<>(
-                thing,
-                responseHeaders,
-                HttpStatus.OK
-        );
+        return things;
     }
 
     @RequestMapping(value = "/api/thing/category/{categoryId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getByCategory(@PathVariable int categoryId) {
-
+    public Set<Thing> getByCategory(@PathVariable Integer categoryId) {
         Category category = categoryRepo.findById(categoryId);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Type", "application/json");
-        return new ResponseEntity<>(
-            thingRepo.thingsByCategory(category.getRightNode(), category.getLeftNode()),
-            responseHeaders,
-            HttpStatus.OK
-        );
+        return thingRepo.thingsByCategory(category.getRightNode(), category.getLeftNode());
     }
 
     public static class Feature {
@@ -143,14 +117,14 @@ public class ThingController {
     }
 
     public static class SubThing {
-        private int count;
+        private Integer count;
         private List<Feature> features;
 
-        public int getCount() {
+        public Integer getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(Integer count) {
             this.count = count;
         }
 
@@ -165,7 +139,7 @@ public class ThingController {
 
     public static class ThingData {
         private String name;
-        private int[] categories;
+        private Integer[] categories;
         private Feature[] features;
         private Set<SubThing> subThings;
 
@@ -177,11 +151,11 @@ public class ThingController {
             this.name = name;
         }
 
-        public int[] getCategories() {
+        public Integer[] getCategories() {
             return categories;
         }
 
-        public void setCategories(int[] categories) {
+        public void setCategories(Integer[] categories) {
             this.categories = categories;
         }
 
@@ -204,11 +178,11 @@ public class ThingController {
     }
 
     @RequestMapping(value = "/api/thing", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody ThingData data) {
+    public Thing create(@RequestBody ThingData data) {
 
         Thing thing = new Thing();
 
-        int[] categories = data.getCategories();
+        Integer[] categories = data.getCategories();
 
         Set<Category> categoriesSet = new HashSet<Category>();
 
@@ -270,18 +244,15 @@ public class ThingController {
 
         thingRepo.save(thing);
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Type", "application/json");
-        return new ResponseEntity<>(data, responseHeaders, HttpStatus.OK
-        );
+        return thing;
     }
 
     @RequestMapping(value = "/api/thing/{thingId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@PathVariable int thingId) {
+    public String delete(@PathVariable Integer thingId) {
 
         thingRepo.deleteById(thingId);
 
-        int[] idsFeatureActive = featureRepo.getIds();
+        Integer[] idsFeatureActive = featureRepo.getIds();
 
         if (idsFeatureActive.length == 0) {
             featureRepo.deleteAll();
@@ -289,10 +260,6 @@ public class ThingController {
             featureRepo.deleteFeatureByIds(idsFeatureActive);
        }
 
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Type", "application/json");
-        return new ResponseEntity<>("{\"id\": " + thingId + "}", responseHeaders, HttpStatus.OK
-        );
+       return "{\"id\": " + thingId + "}";
     }
 }

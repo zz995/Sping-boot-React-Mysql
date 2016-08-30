@@ -5,6 +5,7 @@ import AdminPanelActions from '../actions/AdminPanelActions'
 import NewThing from './NewThing.jsx';
 import DeleteThing from './DeleteThing.jsx';
 import Category from './Category.jsx';
+import ThingAction from '../actions/ThingActions';
 
 import '../style/main.scss';
 
@@ -27,6 +28,9 @@ export default class Admin extends Component {
     }
 
     render() {
+
+        ThingAction.getThings();
+
         return (
             <div className="wrapper">
                 <div className="aside">

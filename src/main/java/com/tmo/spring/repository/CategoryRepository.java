@@ -15,29 +15,29 @@ import java.util.Set;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Set<Category> findAllByOrderByLeftNodeAsc();
 
-    Category findById(int id);
+    Category findById(Integer id);
 
     @Query("select distinct ft.name, fv.value from Category c join c.feature_titles ft join ft.feature_vals fv join fv.thing t join t.categories cs where c.leftNode >= ?2 AND c.rightNode <= ?1 AND cs.leftNode >= ?2 AND cs.rightNode <= ?1 AND fv.count is null")
-    Set<?> featureByCategory(int right, int left);
+    Set<?> featureByCategory(Integer right, Integer left);
 
     @Modifying(clearAutomatically = true)
     @Query("update Category c set c.leftNode = c.leftNode + 2, c.rightNode = c.rightNode + 2 where c.leftNode > ?1")
-    void updateKey(int right);
+    void updateKey(Integer right);
 
     @Modifying(clearAutomatically = true)
     @Query("update Category c set c.rightNode = c.rightNode + 2 where c.rightNode >= ?1 AND c.leftNode < ?1")
-    void updateNode(int right);
+    void updateNode(Integer right);
 
     @Modifying(clearAutomatically = true)
     @Query("update Category c set c.rightNode = c.rightNode - (?1 - ?2 + 1) where c.rightNode > ?1 AND c.leftNode < ?2")
-    void updateParentNode(int right, int left);
+    void updateParentNode(Integer right, Integer left);
 
     @Modifying(clearAutomatically = true)
     @Query("update Category c set c.leftNode = c.leftNode - (?1 - ?2 + 1), c.rightNode = c.rightNode - (?1 - ?2 + 1) where c.leftNode > ?1")
-    void updateLastNode(int right, int left);
+    void updateLastNode(Integer right, Integer left);
 
     @Modifying
     @Transactional
     @Query("delete from Category c where c.leftNode >= ?2 and c.rightNode <= ?1")
-    void deleteNode(int right, int left);
+    void deleteNode(Integer right, Integer left);
 }

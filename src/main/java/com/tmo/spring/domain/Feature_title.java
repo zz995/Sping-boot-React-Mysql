@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name="feature_title")
 public class Feature_title {
 
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -24,11 +24,11 @@ public class Feature_title {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name="user")
 public class User {
 
-    private int id;
+    private Integer id;
     private String name;
 
     private Set<Thing> things;
@@ -22,11 +22,11 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

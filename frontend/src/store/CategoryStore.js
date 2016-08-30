@@ -6,7 +6,7 @@ import AppConstants from '../constants/AppConstants';
 
 const CHANGE_EVENT = 'change';
 
-let _categories = {};
+let _categories = [];
 let _selected = {};
 let _posInput = null;
 let _isAdmin = false;
